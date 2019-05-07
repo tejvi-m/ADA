@@ -1,0 +1,15 @@
+One possible definition of the approximate string matching problem is the following: Given a pattern string {\displaystyle P=p_{1}p_{2}...p_{m}} P = p_1p_2...p_m and a text string {\displaystyle T=t_{1}t_{2}\dots t_{n}} T = t_1t_2\dots t_n, find a substring {\displaystyle T_{j',j}=t_{j'}\dots t_{j}} T_{j',j} = t_{j'}\dots t_j in T, which, of all substrings of T, has the smallest edit distance to the pattern P.
+
+A brute-force approach would be to compute the edit distance to P for all substrings of T, and then choose the substring with the minimum distance. However, this algorithm would have the running time O(n3 m).
+
+A better solution, which was proposed by Sellers[3], relies on dynamic programming. It uses an alternative formulation of the problem: for each position j in the text T and each position i in the pattern P, compute the minimum edit distance between the i first characters of the pattern, {\displaystyle P_{i}} P_{i}, and any substring {\displaystyle T_{j',j}} T_{j',j} of T that ends at position j.
+
+For each position j in the text T, and each position i in the pattern P, go through all substrings of T ending at position j, and determine which one of them has the minimal edit distance to the i first characters of the pattern P. Write this minimal distance as E(i, j). After computing E(i, j) for all i and j, we can easily find a solution to the original problem: it is the substring for which E(m, j) is minimal (m being the length of the pattern P.)
+
+Computing E(m, j) is very similar to computing the edit distance between two strings. In fact, we can use the Levenshtein distance computing algorithm for E(m, j), the only difference being that we must initialize the first row with zeros, and save the path of computation, that is, whether we used E(i − 1,j), E(i,j − 1) or E(i − 1,j − 1) in computing E(i, j).
+
+In the array containing the E(x, y) values, we then choose the minimal value in the last row, let it be E(x2, y2), and follow the path of computation backwards, back to the row number 0. If the field we arrived at was E(0, y1), then T[y1 + 1] ... T[y2] is a substring of T with the minimal edit distance to the pattern P.
+
+Computing the E(x, y) array takes O(mn) time with the dynamic programming algorithm, while the backwards-working phase takes O(n + m) time.
+
+Another new idea recent years is the similarity join. When matching database relates to a large scale of data, the O(mn) time with the dynamic programming algorithm cannot work within a limited time. So, the idea is, instead of computing the similarity of all pairs of strings, to reduce the number of candidate pairs. Widely used algorithms are based on filter-verification, hashing, Locality-sensitive hashing (LSH), Tries and other greedy and approximation algorithms. Most of them are designed to fit some framework (such as Map-Reduce) to compute concurrently.
