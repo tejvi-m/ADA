@@ -1,4 +1,5 @@
 import cmd
+from fuzz_complete import *
 
 addresses = [
     'here@blubb.com',
@@ -7,18 +8,29 @@ addresses = [
     'whatever@wherever.org',
 ]
 
+data = open("./data/google-10000-english.txt", "r")
+for line in data.readlines()[:1000]:
+    word = line.strip()
+    trie.insert(word)
+
+
 class MyCmd(cmd.Cmd):
     def do_start(self, line):
         pass
 
     def complete_start(self, text, line, start_index, end_index):
+
         if text:
+            results = search(text, 2, True)
             return [
-                address for address in addresses
-                if address.startswith(text)
+
+                result[0][:] for result in results
             ]
+            # text = text.replace(" ", "")
+            # return text
+
         else:
-            return addresses
+            return "type something"
 
 
 if __name__ == '__main__':

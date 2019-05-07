@@ -20,11 +20,6 @@ class TrieNode:
 
 
 trie = TrieNode()
-data = open("./data/exampleText0.txt", "r")
-for line in data.readlines():
-    words = line.split(" ")
-    for i in range(len(words)):
-        trie.insert(words[i])
 
 def search(word, maxcost,  ratio_calc = False):
     currentrow = range(len(word)+1)
@@ -66,6 +61,11 @@ if __name__ == '__main__':
     target = sys.argv[1]
     max_cost = int(sys.argv[2])
 
+    data = open("./data/exampleText0.txt", "r")
+    for line in data.readlines():
+        words = line.split(" ")
+        for i in range(len(words)):
+            trie.insert(words[i])
 
     results = search(target, max_cost, True)
     for res in results:
