@@ -67,9 +67,9 @@ if __name__ == '__main__':
     target = sys.argv[1]
     max_cost = int(sys.argv[2])
 
-    data = open("./data/my.txt", "r")
+    data = open("./data/google-10000-english.txt", "r")
     for line in data.readlines():
-        words = line.split(" ")
+        words = line.strip().split(" ")
         for i in range(len(words)):
             trie.insert(words[i])
 
