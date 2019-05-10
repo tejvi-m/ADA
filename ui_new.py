@@ -1,5 +1,5 @@
 import cmd
-from damerau import *
+from damerau_levenshtein import *
 
 addresses = [
     'here@blubb.com',
@@ -21,7 +21,7 @@ class MyCmd(cmd.Cmd):
     def complete_start(self, text, line, start_index, end_index):
 	
         if text:
-            results = search(text, 2, True)
+            results = search(text, 1, True)
             return [
 
                 result[0][:] for result in results
