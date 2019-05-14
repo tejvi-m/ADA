@@ -60,15 +60,14 @@ def search_again(node, letter, word, prevRow, results, maxcost, ratio_calc):
 if __name__ == '__main__':
     target = sys.argv[1]
     max_cost = int(sys.argv[2])
-
-    data = open("./data/exampleText0.txt", "r")
+    suppress = int(sys.argv[3])
+    data = open("./data/google-10000-english.txt", "r")
     for line in data.readlines():
         words = line.split(" ")
         for i in range(len(words)):
             trie.insert(words[i])
 
     results = search(target, max_cost, True)
-    for res in results:
-        print(res)
-
-    print(NodeCount,"thats it i guess")
+    if not suppress:
+        for res in results:
+            print(res)
