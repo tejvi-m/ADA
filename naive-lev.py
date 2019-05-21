@@ -1,4 +1,4 @@
-from lev_ratio import *
+from levenshtein import *
 import sys
 
 
